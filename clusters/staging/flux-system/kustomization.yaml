@@ -19,7 +19,7 @@ patches:
               - name: manager
                 env:
                   - name: "HTTPS_PROXY"
-                    value: "http://proxy.example.com:3129"
+                    value: "http://192.168.216.1:7890"
                   - name: "NO_PROXY"
                     value: ".cluster.local.,.cluster.local,.svc"
     target:
