@@ -4,3 +4,21 @@ resources:
   - cert-manager.yaml
   - ingress-nginx.yaml
   - weave-gitops.yaml
+patches:
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: all
+      spec:
+        template:
+          spec:
+            containers:
+              - name: manager
+                env:
+                  - name: "ALL_PROXY"
+                    value: "socks5://192.168.216.1:7890"      
+    target:
+      kind: Deployment
+      labelSelector: app.kubernetes.io/part-of=flux
+      name: "(source-controller|image-automation-controller)"
