@@ -8,20 +8,12 @@ labels:
       toolkit.fluxcd.io/tenant: sre-team
 patches:
   - patch: |
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: all
-      spec:
-        template:
-          spec:
-            containers:
-              - name: manager
-                env:
-                  - name: "HTTPS_PROXY"
-                    value: "http://192.168.216.1:7890"
-                  - name: "NO_PROXY"
-                    value: ".cluster.local.,.cluster.local,.svc"
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --concurrent=20
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --requeue-dependency=5s
     target:
       kind: Deployment
       name: "(kustomize-controller|helm-controller|source-controller)"
