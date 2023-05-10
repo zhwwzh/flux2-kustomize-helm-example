@@ -8,20 +8,20 @@ labels:
       toolkit.fluxcd.io/tenant: sre-team
 patches:
   - patch: |
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: all
-      spec:
-        template:
-          spec:
-            containers:
-              - name: manager
-                env:
-                  - name: "HTTPS_PROXY"
-                    value: "http://proxy.example.com:3129"
-                  - name: "NO_PROXY"
-                    value: ".cluster.local.,.cluster.local,.svc"
+      - apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: all
+        spec:
+          template:
+            spec:
+              containers:
+                - name: manager
+                  env:
+                    - name: "HTTPS_PROXY"
+                      value: "http://proxy.example.com:3129"
+                    - name: "NO_PROXY"
+                      value: ".cluster.local.,.cluster.local,.svc"
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --concurrent=20
