@@ -16,9 +16,10 @@ patches:
             containers:
               - name: manager
                 env:
-                  - name: "ALL_PROXY"
-                    value: "socks5://192.168.216.1:7890"      
+                  - name: "HTTPS_PROXY"
+                    value: "http://192.168.216.1:7890"
+                  - name: "NO_PROXY"
+                    value: ".cluster.local.,.cluster.local,.svc"      
     target:
       kind: Deployment
       labelSelector: app.kubernetes.io/part-of=flux
-      name: "(source-controller|image-automation-controller)"
